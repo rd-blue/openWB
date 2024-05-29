@@ -66,6 +66,8 @@
 					<div class="row">
 						<div class="col">
 							Kernel: <?php echo exec('uname -ors'); ?><br>
+							Version: <?php echo exec('cat /etc/*release | grep -m 2 "VERSION" | sed "s/^.*=//"'); ?><br>
+							ID: <?php echo exec('cat /etc/*release | grep -m 2 "ID" | sed "s/^.*=//"'); ?><br>
 							<?php echo exec('python3 -V'); ?><br>
 							openWB Version: <span id="installedVersionSpan" data-version=""></span>
 						</div>
