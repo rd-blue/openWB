@@ -665,6 +665,15 @@ updateConfig(){
 	if ! grep -Fq "goetimeoutlp3=" $ConfigFile; then
 		echo "goetimeoutlp3=5" >> $ConfigFile
 	fi
+	if ! grep -Fq "ecb1wbiplp1=" $ConfigFile; then
+		echo "ecb1wbiplp1=192.168.1.191" >> $ConfigFile
+	fi
+	if ! grep -Fq "ecb1wbtimeoutlp1=" $ConfigFile; then
+		echo "ecb1wbtimeoutlp1=2" >> $ConfigFile
+	fi
+	if ! grep -Fq "tasmota13iplp1=" $ConfigFile; then
+		echo "tasmota13iplp1=192.168.1.193" >> $ConfigFile
+	fi
 	if ! grep -Fq "pushbenachrichtigung=" $ConfigFile; then
 		echo "pushbenachrichtigung=0" >> $ConfigFile
 	fi

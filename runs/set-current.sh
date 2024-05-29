@@ -39,6 +39,9 @@ lp5enabled=$(<ramdisk/lp5enabled)
 lp6enabled=$(<ramdisk/lp6enabled)
 lp7enabled=$(<ramdisk/lp7enabled)
 lp8enabled=$(<ramdisk/lp8enabled)
+
+source ./modules/ecb1wblp1/ecb1wbcheck.sh
+
 #####
 #
 # functions
@@ -325,6 +328,11 @@ function setChargingCurrent () {
 	if [[ $evsecon == "simpleevsewifi" ]]; then
 		setChargingCurrentWifi "$current" "$evsewifitimeoutlp1" "$evsewifiiplp1"
 	fi
+
+	if [[ $evsecon == "ecb1wb" ]]; then
+		setChargingCurrentecb1 "$current" "$ecb1wbtimeoutlp1" "$ecb1wbiplp1"
+	fi
+
 	if [[ $evsecon == "goe" ]]; then
 		setChargingCurrentgoe "$current" "$goetimeoutlp1" "$goeiplp1"
 	fi

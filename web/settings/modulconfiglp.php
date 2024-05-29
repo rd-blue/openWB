@@ -87,6 +87,7 @@
 										<option <?php if($evseconold == "ipevse" && $ipevseconv2) echo "selected" ?> value="ipevse" data-id="openwb satellite v2">Satellit V2</option>
 									</optgroup>
 									<optgroup label="andere Ladepunkte">
+										<option <?php if($evseconold == "ecb1wb") echo "selected" ?> value="ecb1wb">eCB1 Hardy Barth Wallbox</option>
 										<option <?php if($evseconold == "goe") echo "selected" ?> value="goe">Go-e</option>
 										<option <?php if($evseconold == "keba") echo "selected" ?> value="keba">Keba</option>
 										<option <?php if($evseconold == "nrgkick") echo "selected" ?> value="nrgkick">NRGKick + Connect</option>
@@ -442,6 +443,50 @@
 										<span class="form-text small">
 											Gibt die Zeit in Sekunden an wie lange auf Antwort des Go-echargers gewartet wird. Bei gutem Wlan reichen 2 Sekunden aus.
 											Zu lange Wartezeit zieht einen Verzug der Regellogik von openWB mit sich wenn der Go-echarger z.B. gerade unterwegs genutzt wird.
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="evseconecb1wb" class="hide">
+							<input type="hidden" name="ladeleistungmodul" value="ecb1wblp1">
+							<div class="form-group">
+								<div class="alert alert-info">
+									Experimentell.<br>
+									Nutz REST API von Hardy Barth Wallbox mit eCB1.<br>
+									<span class="text-danger">
+										eCB1 muss im Modus "manuelle Ladung" stehen, damit openWB die Ladung steuert!<br>
+										In jedem Modus wird die Ladung freigeschaltet im eCB1, sobalt der Ladepunkt aktiviert ist.<br>
+										Somit übernimmt die openWB auch die Überwachung in den anderen Modi der eCB1.
+									</span>
+								</div>
+								<div class="form-row mb-1">
+									<label for="ecb1wbiplp1" class="col-md-4 col-form-label">IP Adresse eCB1</label>
+									<div class="col">
+										<input class="form-control" type="text" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" name="ecb1wbiplp1" id="ecb1wbiplp1" value="<?php echo $ecb1wbiplp1old ?>">
+										<span class="form-text small">
+											Gültige Werte IP Adresse im Format: x.x.x.x
+										</span>
+									</div>
+								</div>
+								<div class="form-row mb-1">
+									<label for="ecb1wbtimeoutlp1" class="col-md-4 col-form-label">Timeout eCB1</label>
+									<div class="col">
+										<input class="form-control" type="number" min="0" max="10" step="1" name="ecb1wbtimeoutlp1" id="ecb1wbtimeoutlp1" value="<?php echo $ecb1wbtimeoutlp1old ?>">
+										<span class="form-text small">
+											Gibt die Zeit in Sekunden an wie lange auf Antwort des eCB1 gewartet wird.<br>
+											Zu lange Wartezeit zieht einen Verzug der Regellogik von openWB mit sich.
+										</span>
+									</div>
+								</div>
+								<div class="form-row mb-1">
+									<label for="tasmota13iplp1" class="col-md-4 col-form-label">IP Adresse Phasenumschaltung<br>Tasmota WiFi Modul (optional)</label>
+									<div class="col">
+										<input class="form-control" type="text" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" name="tasmota13iplp1" id="tasmota13iplp1" value="<?php echo $tasmota13iplp1old ?>">
+										<span class="form-text small">
+											Falls in der Hardy Barth Wallbox ein spezielles Phasenumschaltmodul nachgerüstet ist, kann die automatische Phasenumschaltung der openWB genutzt werden.<br>
+											Das Modul enthält ein bi-stabiles Relay für ein Schütz mit Phase 2 und 3, welches von einem Tasmota WiFi Modul gesteuert wird.<br>
+											IP Adresse, im Format: x.x.x.x.<br>
 										</span>
 									</div>
 								</div>
@@ -2222,6 +2267,7 @@
 							hideSection('#evseconmod');
 							hideSection('#evseconswifi');
 							hideSection('#evsecongoe');
+							hideSection('#evseconecb1wb');
 							hideSection('#evseconnrgkick');
 							hideSection('#evseconmastereth');
 							hideSection('#evseconkeba');
@@ -2303,6 +2349,9 @@
 							}
 							if($('#evsecon').val() == 'goe') {
 								showSection('#evsecongoe');
+							}
+							if($('#evsecon').val() == 'ecb1wb') {
+								showSection('#evseconecb1wb');
 							}
 							if($('#evsecon').val() == 'masterethframer') {
 								showSection('#evseconmastereth');

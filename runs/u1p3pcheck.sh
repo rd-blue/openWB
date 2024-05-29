@@ -16,6 +16,10 @@ if [[ "$1" == "1" ]]; then
 	if [[ $evsecon == "owbpro" ]]; then
 		curl -s -X POST --data "phasetarget=1" "$owbpro1ip/connect.php"
 	fi
+	if [[ $evsecon == "ecb1wb" ]]; then
+		curl -s --connect-timeout 2 http://$tasmota13iplp1/cm?cmnd=Power1%20On > /dev/null
+		openwbDebugLog "MAIN" 0 "+++ eCB1 1-phasig: $tasmota13iplp1"
+	fi
 
 	# chargepoint 2
 	if [[ $lastmanagement == 1 && $evsecons1 == "modbusevse" && $u1p3plp2aktiv == "1" ]]; then
@@ -117,7 +121,10 @@ if [[ "$1" == "3" ]]; then
 	if [[ $evsecon == "owbpro" ]]; then
 		curl -s -X POST --data "phasetarget=3" "$owbpro1ip/connect.php"
 	fi
-
+	if [[ $evsecon == "ecb1wb" ]]; then
+		curl -s --connect-timeout 2 http://$tasmota13iplp1/cm?cmnd=Power2%20On > /dev/null
+		openwbDebugLog "MAIN" 0 "+++ eCB1 3-phasig: $tasmota13iplp1"
+	fi
 	if [[ $lastmanagement == 1 && $evsecons1 == "extopenwb" ]]; then
 		mosquitto_pub -r -t openWB/set/isss/U1p3p -h "$chargep2ip" -m "3"
 	fi
@@ -201,6 +208,11 @@ if [[ "$1" == "stop" ]]; then
 		runs/set-current.sh 0 m
 	fi
 	if [[ $evsecon == "daemon" ]]; then
+		oldll=$(<ramdisk/llsoll)
+		echo "$oldll" > ramdisk/tmpllsoll
+		runs/set-current.sh 0 m
+	fi
+	if [[ $evsecon == "ecb1wb" ]]; then
 		oldll=$(<ramdisk/llsoll)
 		echo "$oldll" > ramdisk/tmpllsoll
 		runs/set-current.sh 0 m
@@ -307,6 +319,10 @@ if [[ "$1" == "start" ]]; then
 		oldll=$(<ramdisk/tmpllsoll)
 		runs/set-current.sh "$oldll" m
 	fi
+	if [[ $evsecon == "ecb1wb" ]]; then
+		oldll=$(<ramdisk/tmpllsoll)
+		runs/set-current.sh "$oldll" m
+	fi
 
 	if [[ $evsecon == "ipevse" ]]; then
 		oldll=$(<ramdisk/tmpllsoll)
@@ -389,6 +405,9 @@ if [[ "$1" == "startslow" ]]; then
 		runs/set-current.sh "$minimalapv" m
 	fi
 	if [[ $evsecon == "daemon" ]]; then
+		runs/set-current.sh "$minimalapv" m
+	fi
+	if [[ $evsecon == "ecb1wb" ]]; then
 		runs/set-current.sh "$minimalapv" m
 	fi
 	if [[ $evsecon == "extopenwb" ]]; then
