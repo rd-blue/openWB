@@ -20,7 +20,7 @@ function loadHourlyConsumptionchart(labels, dataConsumption, dataPrice) {
 			datasets: [{
 				yAxisID: 'y-axis-left',
 				data: dataPrice,
-				borderColor: 'rgba(201, 38, 38, 1)',
+				borderColor: 'rgba(50, 230, 150, 1)',
 				backgroundColor: 'rgba(30, 33, 194, 0.7)',
 				borderWidth: 2,
 				fill: false,
