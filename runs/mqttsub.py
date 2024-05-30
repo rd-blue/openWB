@@ -562,6 +562,20 @@ def on_message(client: mqtt.Client, userdata, msg: mqtt.MQTTMessage):
                     subprocess.run(sendcommand)
                     client.publish("openWB/config/get/global/maxEVSECurrentAllowed",
                                    msg.payload.decode("utf-8"), qos=0, retain=True)
+            if (msg.topic == "openWB/config/set/global/dischargePowerLimit"):              
+                if (int(msg.payload) >= 0 and int(msg.payload) <= 5000):
+                    sendcommand = ["/var/www/html/openWB/runs/replaceinconfig.sh",
+                                   "dischargepowerlimit=", msg.payload.decode("utf-8")]
+                    subprocess.run(sendcommand)
+                    client.publish("openWB/config/get/global/dischargePowerLimit",
+                                   msg.payload.decode("utf-8"), qos=0, retain=True)
+            if (msg.topic == "openWB/config/set/global/dischargeLimitEnabled"):
+                if (int(msg.payload) >= 0 and int(msg.payload) <= 1):
+                    sendcommand = ["/var/www/html/openWB/runs/replaceinconfig.sh",
+                                   "dischargelimitenabled=", msg.payload.decode("utf-8")]
+                    subprocess.run(sendcommand)
+                    client.publish("openWB/config/get/global/dischargeLimitEnabled",
+                                   msg.payload.decode("utf-8"), qos=0, retain=True)
             if (msg.topic == "openWB/config/set/global/dataProtectionAcknoledged"):
                 if (int(msg.payload) >= 0 and int(msg.payload) <= 2):
                     sendcommand = ["/var/www/html/openWB/runs/replaceinconfig.sh",

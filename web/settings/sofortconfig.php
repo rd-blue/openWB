@@ -70,8 +70,61 @@
 								</div>
 							</div>
 						</div>
+						<h4 class="border-success"><br>Preisbasiertes Entlade Limit für den Haus-Speicher</h4>
+							<div class="form-row mb-1">
+									<label class="col-md-4 col-form-label">Entlade Limit</label>
+									<div class="col">
+										<div class="btn-group btn-block btn-group-toggle" id="dischargeLimitEnabled" name="dischargeLimitEnabled" 
+												data-toggle="buttons" data-default="0" data-topicprefix="openWB/config/get/global/">
+											<label class="btn btn-outline-info btn-toggle">
+												<input type="radio" name="dischargeLimitEnabled" data-option="0" value="0"> Aus
+											</label>
+											<label class="btn btn-outline-info btn-toggle">
+												<input type="radio" name="dischargeLimitEnabled" data-option="1" value="1"> An
+											</label>
+										</div>
+										<span class="form-text small">Limitierung wird bei günstigem Strom gesetzt, aber nur im Modus Sofortladen.
+											<span class="text-danger">
+												Achtung, die Limitierung wird bei günstigem Strom auch ohne Ladevorgang gesetzt.
+											</span>
+										</span>
+									</div>
+								</div>
+							<div class="form-group mb-1 limitdischarge hide">
+									<div class="form-row mb-1">
+										<label for="dischargePowerLimit" class="col-md-4 col-form-label">Entladeleistung</label>
+										<div class="col-md-8">
+											<div class="form-row vaRow mb-1">
+												<label for="dischargePowerLimit" class="col-2 col-form-label valueLabel" suffix="W">W</label>
+												<div class="col-10">
+													<input type="range" class="form-control-range rangeInput" name="dischargePowerLimit" id="dischargePowerLimit" 
+														min="0" max="1000" step="50" value="0" data-default="50" data-topicprefix="openWB/config/get/global/">
+												</div>
+											</div>
+											<span class="form-text small">
+												Parameter in [W] für die Entladebegrenzung im Modus Sofortladen.
+												<span class="text-danger">
+													Dieser Einstellungen können auf der Hauptseite der openWB per Sofortzugriff im Modus Sofortladen jederzeit geändert werden, jedoch nur im "colors" Theme.
+												</span>
+											</span>
+										</div>
+									</div>
+								</div>
 					</div>  <!-- end card body Allgemeine Einstellungen Sofort -->
 				</div>  <!-- end card Allgemeine Einstellungen Sofort -->
+				<script>
+					$(document).ready(function(){
+						$('input[type=radio][name=dischargeLimitEnabled]').change(function(){
+							if(this.value == '0') {
+								hideSection('.limitdischarge');
+							} else {
+								if(this.value == 1) {
+									showSection('.limitdischarge');
+								}
+							}
+						})
+					});
+				</script>
 
 				<?php for( $chargepoint = 1; $chargepoint < 9; $chargepoint++ ){ // begin chargepoint loop ?>
 					<div class="card border-primary lp<?php echo $chargepoint; ?>options<?php if( $chargepoint > 1 ) echo " hide"; ?>">
@@ -360,6 +413,13 @@
 						for( $index = 1; $index < 9; $index++ ){
 							hideSection('.lp' + $index + 'etBased');
 						}
+					}
+				}
+				if ( elementId.match( /^dischargeLimitEnabled*$/i ) ) {
+					if ( mqttpayload == 1) {
+						showSection('.limitdischarge');
+					} else {
+						hideSection('.limitdischarge');
 					}
 				}
 			}

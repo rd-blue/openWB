@@ -1806,6 +1806,8 @@ loadvars(){
 	mqttconfvar["config/get/pv/nurpv70dynw"]=nurpv70dynw
 	mqttconfvar["config/get/global/maxEVSECurrentAllowed"]=maximalstromstaerke
 	mqttconfvar["config/get/global/minEVSECurrentAllowed"]=minimalstromstaerke
+	mqttconfvar["config/get/global/dischargePowerLimit"]=dischargepowerlimit
+	mqttconfvar["config/get/global/dischargeLimitEnabled"]=dischargelimitenabled
 	mqttconfvar["config/get/global/dataProtectionAcknoledged"]=datenschutzack
 	mqttconfvar["config/get/u1p3p/sofortPhases"]=u1p3psofort
 	mqttconfvar["config/get/u1p3p/standbyPhases"]=u1p3pstandby

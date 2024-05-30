@@ -743,6 +743,36 @@
 					</div>
 				</div>
 			</div>
+			<!-- Discharge Limit -->
+			<div class="col-lg-4 p-1 m-0 dischargeConfiguration var-width show" id="dischargeConfigWidget">
+				<div class="wb-widget p-2 m-0 rounded shadow">
+					<h3 class="mt-0"><span class="fas fa-car-battery" style="color: var(--color-battery)">&nbsp;</span> Preisbasiertes Speicher Entladelimit</h3>
+					<div class="row justify-content-center">
+						<h4 class="text-center">Aktivierung</h4>
+					</div>
+					<div class="p-0 wb-subwidget">
+						<form id="dischargeEinstellungen" class="show">
+							<div class="form-row vaRow form-group mt-1 justify-content-center">
+								<div class="col btn-group btn-group-toggle" id="dischargeLimitEnabled" data-toggle="buttons" data-topicprefix="openWB/config/get/global/">
+									<label class="btn btn-sm btn-outline-info btn-toggle regularTextSize">
+										<input type="radio" name="dischargeLimitEnabled" data-option="0" value="0"> Aus
+									</label>
+									<label class="btn btn-sm btn-outline-info btn-toggle regularTextSize">
+										<input type="radio" name="dischargeLimitEnabled" data-option="1" value="1"> An
+									</label>
+								</div>
+							</div>
+							<div class="form-row form-group mb-1 vaRow regularTextSize" data-option="1">
+								<label for="dischargePowerLimit" class="col-3 col-form-label text-right">Limit:</label>								
+								<div class="col">
+									<input type="range" class="form-control-range rangeInput" id="dischargePowerLimit"
+										min="0" max="1000" step="50" value="0" data-topicprefix="openWB/config/get/global/">
+								</div>
+								<label for="dischargePowerLimit" class="col-3 col-form-label valueLabel" suffix="W"></label>
+							</div>
+						</form>
+					</div>
+				</div>
 		</div>
 	</div>
 	</div>
@@ -871,9 +901,16 @@
 
 		function chargeLimitationOptionsShowHide(btnGrp, option) {
 			// show/hide all option-parameters in form-rows for selected option
+			var elementId = $(btnGrp).attr('id');
+			if ( elementId.match( /^dischargeLimitEnabled*$/i ) ) {
+				var parent = btnGrp.closest('.dischargeConfiguration');  // get parent div element for charge limitation options
+				$(parent).find('.form-row[data-option*=' + option + ']').show();  // now show option elements for selected option
+				$(parent).find('.form-row[data-option]').not('[data-option*=' + option + ']').hide();  // hide all other option elements				
+			} else {
 			var parent = btnGrp.closest('.chargeLimitation[data-lp]');  // get parent div element for charge limitation options
 			$(parent).find('.form-row[data-option*=' + option + ']').show();  // now show option elements for selected option
 			$(parent).find('.form-row[data-option]').not('[data-option*=' + option + ']').hide();  // hide all other option elements
+		}
 		}
 
 		function processPreloader(mqttTopic) {

@@ -154,7 +154,9 @@ def read_legacy(component_type: str,
                 zweiterspeicher: Optional[int] = None,
                 subbat: Optional[int] = None,
                 ip2address: Optional[str] = None,
-                num: Optional[int] = None) -> None:
+                num: Optional[int] = None,
+                aktiv: Optional[int] = None,
+                dischargePwrLimit: Optional[int] = None) -> None:
     def get_bat_state() -> Tuple[List, BatState]:
         def create_bat(modbus_id: int) -> bat.SolaredgeBat:
             component_config = SolaredgeBatSetup(id=num,
@@ -166,6 +168,7 @@ def read_legacy(component_type: str,
         soc_bat, power_bat = [], []
         for battery in bats:
             power, soc = battery.get_values()
+            battery.discharge_limit(aktiv, dischargePwrLimit)
             power_bat.append(power)
             soc_bat.append(soc)
         imported, exported = bats[0].get_imported_exported(sum(power_bat))

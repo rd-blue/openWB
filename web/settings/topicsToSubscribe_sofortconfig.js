@@ -61,6 +61,8 @@ var topicsToSubscribe = [
 	["openWB/config/get/sofort/lp/8/etBasedCharging", 0],
 
 	["openWB/config/get/global/minEVSECurrentAllowed", 0],
+	["openWB/config/get/global/dischargePowerLimit", 0],
+	["openWB/config/get/global/dischargeLimitEnabled", 0],
 
 	["openWB/global/awattar/boolAwattarEnabled", 0]
 ];

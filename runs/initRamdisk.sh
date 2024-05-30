@@ -564,6 +564,8 @@ initRamdisk(){
 		"mqttminimalampv:-1" \
 		"mqttminimalapv:-1" \
 		"mqttminimalstromstaerke:-1" \
+		"mqttdischargepowerlimit:-1" \
+		"mqttdischargelimitenabled:-1" \
 		"mqttminnurpvsocll:-1" \
 		"mqttminnurpvsoclp1:-1" \
 		"mqttnachtladen:-1" \

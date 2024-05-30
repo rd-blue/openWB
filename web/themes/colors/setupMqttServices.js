@@ -409,6 +409,8 @@ var topicsToSubscribe = [
 	["openWB/config/get/sofort/lp/8/energyToCharge", 1],
 	["openWB/config/get/sofort/lp/1/socToChargeTo", 1],
 	["openWB/config/get/sofort/lp/2/socToChargeTo", 1],
+	["openWB/config/get/global/dischargeLimitEnabled", 1],
+	["openWB/config/get/global/dischargePowerLimit", 1],
 
 	["openWB/SmartHome/Devices/1/RunningTimeToday", 1],
 	["openWB/SmartHome/Devices/2/RunningTimeToday", 1],

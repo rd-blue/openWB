@@ -53,6 +53,7 @@ function handlevar(mqttmsg, mqttpayload) {
 	else if (mqttmsg.match(/^openwb\/config\/get\/SmartHome\/Devices\//i)) { processSmartHomeDevicesConfigMessages(mqttmsg, mqttpayload); }
 	else if (mqttmsg.match(/^openwb\/SmartHome\/Status\//i)) { processSmartHomeDevicesStatusMessages(mqttmsg, mqttpayload); }
 	else if (mqttmsg.match(/^openwb\/config\/get\/sofort\/lp\//i)) { processSofortConfigMessages(mqttmsg, mqttpayload); }
+	else if (mqttmsg.match(/^openwb\/config\/get\/global\//i)) { processDischargeLimitMessages(mqttmsg, mqttpayload); }
 	else if (mqttmsg.match(/^openwb\/config\/get\/pv\//i)) { processPvConfigMessages(mqttmsg, mqttpayload); }
 }  // end handlevar
 
@@ -151,6 +152,19 @@ function processSofortConfigMessages(mqttmsg, mqttpayload) {
 		setToggleBtnGroup(elementId, mqttpayload);
 	}
 
+}
+
+function processDischargeLimitMessages(mqttmsg, mqttpayload) {
+	// processes mqttmsg for topic openWB/config/get/sofort/
+	// called by handlevar
+	processPreloader(mqttmsg);
+	var elementId = mqttmsg.replace('openWB/config/get/global/', '');
+	var element = $('#' + $.escapeSelector(elementId));
+	if (element.attr('type') == 'range') {
+		setInputValue(elementId, mqttpayload);
+	} else if (element.hasClass('btn-group-toggle')) {
+		setToggleBtnGroup(elementId, mqttpayload);
+	}
 }
 
 function processGraphMessages(mqttmsg, mqttpayload) {
