@@ -36,7 +36,7 @@ setChargingCurrentecb1(){
 					curl -s -X PUT --connect-timeout $tout -d "manualmodeamp=$newcurrent" http://$ipa/api/v1/chargecontrols/1/mode/manual/ampere > /dev/null
 				fi				
 				openwbDebugLog "MAIN" 0 "+++ eCB1: LADUNG aktivieren"
-				# curl -s -X POST --connect-timeout $tout --header "Content-Type: application/json" --header "Accept: application/json" --header "Content-Length: 0" "http://$ipa/api/v1/chargecontrols/1/start" > /dev/null
+				curl -s -X POST --connect-timeout $tout --header "Content-Type: application/json" --header "Accept: application/json" --header "Content-Length: 0" "http://$ipa/api/v1/chargecontrols/1/start" > /dev/null
 			else
 				state=$(echo $output | jq -r '.chargecontrol.mode')
 				# nur in Manual mode vom eCB1 Strom setzen
