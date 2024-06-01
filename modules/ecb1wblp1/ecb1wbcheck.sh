@@ -28,10 +28,10 @@ setChargingCurrentecb1(){
 				# in PV or Min + PV
 				if (( lmode == 2 )) || (( lmode == 1 )) ; then
 					openwbDebugLog "MAIN" 0 "+++ eCB1: auf eco setzen"
-					curl -s -X PUT --connect-timeout $tout -d "mode=eco" "http://$ipa/api/v1/chargecontrols/1/mode" > /dev/null
+					curl -s -X PUT --connect-timeout $tout -d "pvmode=eco" "http://$ipa/api/v1/pvmode" > /dev/null
 				else
 					openwbDebugLog "MAIN" 0 "+++ eCB1: auf manual setzen"
-					curl -s -X PUT --connect-timeout $tout -d "mode=manual" "http://$ipa/api/v1/chargecontrols/1/mode" > /dev/null
+					curl -s -X PUT --connect-timeout $tout -d "pvmode=manual" "http://$ipa/api/v1/pvmode" > /dev/null
 					openwbDebugLog "MAIN" 1 "+++ eCB1: $newcurrent A setzen"
 					curl -s -X PUT --connect-timeout $tout -d "manualmodeamp=$newcurrent" http://$ipa/api/v1/chargecontrols/1/mode/manual/ampere > /dev/null
 				fi				
